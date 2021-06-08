@@ -4,8 +4,36 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="site.css" type="text/css" />
     <title>Bethany's Pie Shop</title>
+    <link rel="stylesheet" href="site.css" type="text/css" />
+    <style>
+      .input-group{
+        margin-bottom: 20px;
+      }
+
+      .input-group input,.input-group textarea,.input-group select {
+        padding: 10px;
+        border: solid 1px #999;
+        border-radius: 2px;
+        width: 100%;
+      }
+      label{
+        font-weight: 600;
+      }
+
+      input[type="reset"]{
+        background : transparent;
+        border : 0 ;
+        text-decoration: underline;
+        cursor: pointer;
+      }
+
+      input[type="submit"]{
+        border : solid 1px #999 ;
+        border-radius: 3px;
+        padding: 10px;
+      }
+    </style>
   </head>
   <body>
     <header>
@@ -21,6 +49,15 @@
       <aside><img src="images/logo.png" alt="Bethany's Pie Shop" /></aside>
       <article>
         <h1>Order</h1>
+
+        <div class="pie">
+          <img src="">
+          <div class="columns">
+            <div class="title"></div>
+            <div class="price"></div>
+          </div>
+          <p class="desc"></p>
+        </div>
         <form action="http://localhost:7071/api/post" method="POST">
             <div class="input-group">
                 <div><label for="first-name">First Name</label></div>
@@ -72,4 +109,28 @@
       </nav>
     </footer>
   </body>
+  <script>
+    window.addEventListener("DOMContentLoaded",function(e){
+      const order = localStorage.getItem("oder");
+
+      if(order){
+        const pieOrder = JSON.parse(order);
+
+        const pie = document.querySelector(".pie");
+
+        const title = pie.querySelector(".title");
+        const price = pie.querySelector(".price");
+        const desc = pie.querySelector(".desc");
+
+        title.innerText = pieOrder.title;
+        price.innerText = pieOrder.price;
+        title.desc = pieOrder.desc;
+
+        const img = pie.querySelector("img");
+
+        img.setAttribute("src",`images/${pieOrder.id}.png`);
+        img.setAttribute("alt",pieOrder.title);
+      }
+    })
+  </script>
 </html>
